@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class GroceryStoreChatbot {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the Grocery Store! How can I assist you today?");
+        
+        while (true) {
+            System.out.print("You: ");
+            String userMessage = scanner.nextLine();
+
+            if (userMessage.equalsIgnoreCase("exit")) {
+                System.out.println("Thank you for using our chatbot. Have a great day!");
+                break;
+            }
+
+            String response = getBotResponse(userMessage);
+            System.out.println("Bot: " + response);
+        }
+
+        scanner.close();
+    }
+
+    private static String getBotResponse(String userMessage) {
+        // Simple rule-based responses
+        if (userMessage.contains("hello") || userMessage.contains("hi"))
+            return "Hello! How can I help you today?";
+        else if (userMessage.contains("buy") || userMessage.contains("shopping"))
+            return "Sure! What items are you looking for?";
+        else if (userMessage.contains("hours") || userMessage.contains("open"))
+            return "Our store is open from 9 AM to 9 PM every day.";
+        else
+            return "I'm sorry, I didn't understand that. Can you please clarify?";
+    }
+}
