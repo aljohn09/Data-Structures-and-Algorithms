@@ -1,0 +1,60 @@
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
+public class SerapionDinuyan {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        processInputs(sc, new LinkedList<>(), 1, 15);
+    }
+
+    private static void processInputs(Scanner sc, List<Integer> ages, int currentInput, int totalInputs) {
+        if (currentInput <= totalInputs) {
+            System.out.print("Enter birth year for person " + currentInput + " (YYYY format): ");
+            String input = sc.nextLine();
+
+            if (isValidDateFormat(input)) {
+                int birthYear = Integer.parseInt(input);
+                ages.add(birthYear);
+
+                processInputs(sc, ages, currentInput + 1, totalInputs);
+            } else {
+                System.out.println("Invalid date format. Please enter in YYYY format.");
+                processInputs(sc, ages, currentInput, totalInputs);
+            }
+        } else {
+            insertionSort(ages);
+
+            System.out.println("Sorted Ages (Ascending Order):");
+            for (int age : ages) {
+                System.out.println(age);
+            }
+
+            System.out.print("Do you want to run again? (yes/no): ");
+            String choice = sc.nextLine().toLowerCase();
+
+            if (choice.equals("yes")) {
+                processInputs(sc, new LinkedList<>(), 1, totalInputs);
+            } else {
+                System.out.println("Program exiting...");
+            }
+        }
+    }
+
+    private static boolean isValidDateFormat(String input) {
+        return input.matches("\\d{4}");
+    }
+
+    private static void insertionSort(List<Integer> ages) {
+        for (int i = 1; i < ages.size(); ++i) {
+            int key = ages.get(i);
+            int j = i - 1;
+
+            while (j >= 0 && ages.get(j) > key) {
+                ages.set(j + 1, ages.get(j));
+                j = j - 1;
+            }
+            ages.set(j + 1, key);
+        }
+    }
+}
